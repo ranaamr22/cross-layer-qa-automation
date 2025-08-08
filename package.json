@@ -1,0 +1,26 @@
+{
+  "name": "cross-layer-qa-automation",
+  "version": "1.0.0",
+  "description": "A complete end-to-end test automation framework covering UI and API testing using NightwatchJS, Supertest, and CircleCI. Includes test cases, bug reports, CI/CD pipeline, and HTML test reports.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:amazonaws": "npx nightwatch --config ui-tests/amazonaws/nightwatch.conf.js",
+    "test:linkedinRegisterationPage": "npx nightwatch --config ui-tests/linkedinRegisterationPage/nightwatch.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranaamr22/cross-layer-qa-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranaamr22/cross-layer-qa-automation/issues"
+  },
+  "homepage": "https://github.com/ranaamr22/cross-layer-qa-automation#readme",
+  "dependencies": {
+    "chromedriver": "^138.0.5",
+    "nightwatch": "^3.12.2"
+  }
+}
