@@ -5,7 +5,7 @@ const PORT = process.env.MOCK_AUTH_PORT || '8080';
 const BASE = `http://localhost:${PORT}`;
 const api = request(BASE);
 
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWQiOjQxOTIzLCJpYXQiOjE3NTQ3NTIzNDgsImV4cCI6MTc1NDgzODc0OH0.Q97X_1VcSyI5yI8K6g34YcN3b6GOfSz_ZUssnOkwqe0 ';
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWQiOjMxNjg4LCJpYXQiOjE3NTQ3NjIwNTMsImV4cCI6MTc1NDg0ODQ1M30.YR8Tk2IkD66mFdNytlsHQASe8rRY978KHXbtX5_SzK8';
 
 describe('Get User By Token', () => {
   
