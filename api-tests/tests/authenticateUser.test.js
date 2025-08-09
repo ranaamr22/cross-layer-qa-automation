@@ -23,7 +23,7 @@ describe('Authentication & Authorization Tests', () => {
     
   });
 
-  test('POST /api/v1/auth with unmatched mail and password → 200 ', async () => {
+  test('POST /api/v1/auth with unmatched mail and password → 401 ', async () => {
     const res = await api
       .post('/api/v1/auth')
       .send({
