@@ -42,6 +42,8 @@ jobs:
             SERVER_PID=$!
             sleep 5
             npm run test:api-tests
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
             kill $SERVER_PID
             set -e
             exit $EXIT_CODE
