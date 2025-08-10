@@ -15,41 +15,13 @@ jobs:
           name: Install dependencies
           command: npm ci
       - run:
-          name: Install Firefox (Deb package)
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y wget gnupg
-            wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
-            tar xjf firefox.tar.bz2
-            sudo rm -rf /opt/firefox
-            sudo mv firefox /opt/firefox
-            sudo ln -sf /opt/firefox/firefox /usr/bin/firefox
-            rm firefox.tar.bz2
-      - run:
-          name: Install GeckoDriver
-          command: |
-            GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-            wget https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
-            tar -xvzf geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
-            sudo mv geckodriver /usr/local/bin/
-      - run:
           name: Run UI tests
           command: |
             set +e
             EXIT_CODE=0
-
             npm run test:amazonaws
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
-
             npm run test:linkedinRegisterationPage
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
-
             npm run test:myStore
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
-
             set -e
             exit $EXIT_CODE
 
