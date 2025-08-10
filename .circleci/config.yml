@@ -3,7 +3,9 @@ version: 2.1
 executors:
   node_executor:
     docker:
-      - image: cimg/node:22.6.0-browsers
+      - image: cimg/node:20.10-browsers
+        environment:
+          FIREFOX_VERSION: "140.0.1"
     working_directory: ~/project
 
 jobs:
