@@ -1,0 +1,44 @@
+version: 2.1
+
+executors:
+  node_executor:
+    docker:
+      - image: cimg/node:20.10
+    working_directory: ~/project
+
+jobs:
+  run_ui_tests:
+    executor: node_executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Run UI tests
+          command: npm run test:ui
+
+  run_api_tests:
+    executor: node_executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Run Api tests
+          command: |
+            npm run dev 8080 &
+            SERVER_PID=$!
+            sleep 5
+            npm run test:api
+            kill $SERVER_PID
+
+workflows:
+  version: 2
+  test_pipeline:
+    jobs:
+      - run_ui_tests
+      - run_api_tests:
+          requires:
+            - run_ui_tests
