@@ -1,103 +1,46 @@
-version: 2.1
-
-executors:
-  node_executor:
-    docker:
-      - image: cimg/node:20.10-browsers
-    working_directory: ~/project
-
 jobs:
-  run_ui_tests:
+  run_ui_and_api_tests:
     executor: node_executor
     steps:
       - checkout
+
       - run:
           name: Install and verify Chrome
           command: |
-            # Update package lists
             sudo apt-get update
-            
-            # Install Chrome if not present
             if ! command -v google-chrome &> /dev/null; then
-              echo "Chrome not found, installing..."
+              echo "Installing Chrome..."
               wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
               echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
               sudo apt-get update
               sudo apt-get install -y google-chrome-stable
             fi
-            
-            # Verify Chrome installation
             google-chrome --version
             which google-chrome
-            
-            # Create symlink if needed
-            if [ ! -f /usr/bin/chrome ]; then
-              sudo ln -s /usr/bin/google-chrome /usr/bin/chrome
-            fi
-            
-            # Install additional dependencies for Chrome
-            sudo apt-get install -y \
-              libnss3 \
-              libatk-bridge2.0-0 \
-              libdrm2 \
-              libxcomposite1 \
-              libxdamage1 \
-              libxrandr2 \
-              libgbm1 \
-              libxkbcommon0 \
-              libatspi2.0-0
+
       - run:
           name: Install dependencies
           command: npm ci
+
       - run:
           name: Run UI tests
           command: |
             set +e
             EXIT_CODE=0
-            npm run test:amazonaws
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
-            npm run test:linkedinRegisterationPage
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
-            npm run test:myStore
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
-            set -e
+            npm run test:amazonaws || EXIT_CODE=$?
+            npm run test:linkedinRegisterationPage || EXIT_CODE=$?
+            npm run test:myStore || EXIT_CODE=$?
             exit $EXIT_CODE
 
-
-  run_api_tests:
-    executor: node_executor
-    steps:
-      - checkout
       - run:
-          name: Install dependencies
-          command: npm ci
-      - run:
-          name: Run Api tests
+          name: Run API tests (always run, even if UI fails)
+          when: always
           command: |
             set +e
             EXIT_CODE=0
             npm run dev 8080 &
             SERVER_PID=$!
             sleep 5
-            npm run test:api-tests
-            CODE=$?
-            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
+            npm run test:api-tests || EXIT_CODE=$?
             kill $SERVER_PID
-            set -e
             exit $EXIT_CODE
-         
-
-workflows:
-  version: 2
-  test_pipeline:
-    jobs:
-      - run_ui_tests:
-          continue-on-error: true
-      - run_api_tests:
-          requires:
-            - run_ui_tests
-         
-          
