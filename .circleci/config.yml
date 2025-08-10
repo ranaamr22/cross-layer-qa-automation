@@ -12,6 +12,41 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install and verify Chrome
+          command: |
+            # Update package lists
+            sudo apt-get update
+            
+            # Install Chrome if not present
+            if ! command -v google-chrome &> /dev/null; then
+              echo "Chrome not found, installing..."
+              wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+              echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+              sudo apt-get update
+              sudo apt-get install -y google-chrome-stable
+            fi
+            
+            # Verify Chrome installation
+            google-chrome --version
+            which google-chrome
+            
+            # Create symlink if needed
+            if [ ! -f /usr/bin/chrome ]; then
+              sudo ln -s /usr/bin/google-chrome /usr/bin/chrome
+            fi
+            
+            # Install additional dependencies for Chrome
+            sudo apt-get install -y \
+              libnss3 \
+              libatk-bridge2.0-0 \
+              libdrm2 \
+              libxcomposite1 \
+              libxdamage1 \
+              libxrandr2 \
+              libgbm1 \
+              libxkbcommon0 \
+              libatspi2.0-0
+      - run:
           name: Install dependencies
           command: npm ci
       - run:
