@@ -16,7 +16,11 @@ jobs:
           command: npm ci
       - run:
           name: Run UI tests
-          command: npm run test:ui
+          command: |
+            npm run test:amazonaws
+            npm run test:linkedinRegisterationPage
+            npm run test:myStore
+
 
   run_api_tests:
     executor: node_executor
