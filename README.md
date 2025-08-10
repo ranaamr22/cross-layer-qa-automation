@@ -1,4 +1,6 @@
 # cross-layer-qa-automation
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/ranaamr22/cross-layer-qa-automation/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/ranaamr22/cross-layer-qa-automation/tree/main)
+
 A complete end-to-end test automation framework covering UI and API testing using NightwatchJS, Supertest, and CircleCI. Includes test cases, bug reports, CI/CD pipeline, and HTML test reports.
 
 # Test Scripts Documentation
