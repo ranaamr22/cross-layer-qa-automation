@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:amazonaws": "npx nightwatch --config ui-tests/amazonaws/nightwatch.conf.js",
     "test:linkedinRegisterationPage": "npx nightwatch --config ui-tests/linkedinRegisterationPage/nightwatch.conf.js",
+    "test:myStore": "npx nightwatch --config ui-tests/myStore/nightwatch.conf.js",
     "test:api-tests": "npx jest",
     "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js"
   },
