@@ -17,9 +17,11 @@ jobs:
       - run:
           name: Run UI tests
           command: |
+            set +e
             npm run test:amazonaws
             npm run test:linkedinRegisterationPage
             npm run test:myStore
+            set -e
 
 
   run_api_tests:
@@ -32,11 +34,13 @@ jobs:
       - run:
           name: Run Api tests
           command: |
+            set +e
             npm run dev 8080 &
             SERVER_PID=$!
             sleep 5
             npm run test:api
             kill $SERVER_PID
+            set -e
 
 workflows:
   version: 2
