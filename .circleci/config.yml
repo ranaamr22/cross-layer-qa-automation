@@ -18,10 +18,12 @@ jobs:
           name: Run UI tests
           command: |
             set +e
+            EXIT_CODE=0
             npm run test:amazonaws
             npm run test:linkedinRegisterationPage
             npm run test:myStore
             set -e
+            exit $EXIT_CODE
 
 
   run_api_tests:
@@ -35,12 +37,14 @@ jobs:
           name: Run Api tests
           command: |
             set +e
+            EXIT_CODE=0
             npm run dev 8080 &
             SERVER_PID=$!
             sleep 5
             npm run test:api-tests
             kill $SERVER_PID
             set -e
+            exit $EXIT_CODE
 
 workflows:
   version: 2
