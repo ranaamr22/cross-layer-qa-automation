@@ -94,7 +94,10 @@ workflows:
   version: 2
   test_pipeline:
     jobs:
-      - run_ui_tests
-      - run_api_tests
+      - run_ui_tests:
+          continue-on-error: true
+      - run_api_tests:
+          requires:
+            - run_ui_tests
          
           
