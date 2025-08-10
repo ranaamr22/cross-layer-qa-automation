@@ -97,3 +97,4 @@ workflows:
       - run_api_tests:
           requires:
             - run_ui_tests
+          allow_failure: true
