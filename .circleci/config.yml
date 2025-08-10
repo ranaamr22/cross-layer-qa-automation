@@ -95,6 +95,6 @@ workflows:
   test_pipeline:
     jobs:
       - run_ui_tests
-      - run_api_tests:
+      - run_api_tests
          
           
