@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node_executor:
     docker:
-      - image: cimg/node:20.10-browsers
+      - image: cimg/node:22.6.0-browsers
     working_directory: ~/project
 
 jobs:
@@ -19,9 +19,19 @@ jobs:
           command: |
             set +e
             EXIT_CODE=0
+
             npm run test:amazonaws
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
+
             npm run test:linkedinRegisterationPage
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
+
             npm run test:myStore
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
+
             set -e
             exit $EXIT_CODE
 
