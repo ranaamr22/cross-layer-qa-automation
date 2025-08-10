@@ -88,6 +88,7 @@ jobs:
             kill $SERVER_PID
             set -e
             exit $EXIT_CODE
+    when: always      
 
 workflows:
   version: 2
@@ -97,4 +98,4 @@ workflows:
       - run_api_tests:
           requires:
             - run_ui_tests
-          allow_failure: true
+          
