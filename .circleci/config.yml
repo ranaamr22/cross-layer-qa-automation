@@ -55,8 +55,14 @@ jobs:
             set +e
             EXIT_CODE=0
             npm run test:amazonaws
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
             npm run test:linkedinRegisterationPage
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
             npm run test:myStore
+            CODE=$?
+            [ $CODE -ne 0 ] && EXIT_CODE=$CODE
             set -e
             exit $EXIT_CODE
 
