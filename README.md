@@ -78,9 +78,9 @@ Start Mock API Server (for API tests)
 ```bash
 npm run dev
 ```
-Run All Tests (UI + API)
+Run All UI Tests
 ```bash
-npm run test:amazonaws && npm run test:linkedinRegisterationPage && npm run test:myStore && npm run test:api-tests
+npm run test:ui-tests 
 ```
 ### Development Mode
 For development and debugging, you can run tests with additional options:

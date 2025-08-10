@@ -9,6 +9,7 @@
     "test:linkedinRegisterationPage": "npx nightwatch --config ui-tests/linkedinRegisterationPage/nightwatch.conf.js",
     "test:myStore": "npx nightwatch --config ui-tests/myStore/nightwatch.conf.js",
     "test:api-tests": "npx jest",
+    "test:ui-tests": "(npm run test:amazonaws || echo) && (npm run test:linkedinRegisterationPage || echo) && (npm run test:myStore || echo)",
     "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js"
   },
   "repository": {
