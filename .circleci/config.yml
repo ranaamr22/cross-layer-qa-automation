@@ -21,8 +21,10 @@ jobs:
             sudo apt-get install -y wget gnupg
             wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
             tar xjf firefox.tar.bz2
+            sudo rm -rf /opt/firefox
             sudo mv firefox /opt/firefox
             sudo ln -sf /opt/firefox/firefox /usr/bin/firefox
+            rm firefox.tar.bz2
       - run:
           name: Install GeckoDriver
           command: |
