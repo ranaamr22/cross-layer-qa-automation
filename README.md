@@ -60,18 +60,25 @@ project-root/
 To run AWS tests:
 ```bash
 npm run test:amazonaws
-```
 
 To run LinkedIn registration tests:
 ```bash
 npm run test:linkedinRegisterationPage
-```
 
-### Run All Tests
+To run My Store tests:
 ```bash
-# Run all available test suites
-npm run test:amazonaws && npm run test:linkedinRegisterationPage
-```
+npm run test:myStore
+
+To run API tests:
+npm run test:api-tests
+
+Start Mock API Server (for API tests)
+```bash
+npm run dev
+
+Run All Tests (UI + API)
+```bash
+npm run test:amazonaws && npm run test:linkedinRegisterationPage && npm run test:myStore && npm run test:api-tests
 
 ### Development Mode
 For development and debugging, you can run tests with additional options:
