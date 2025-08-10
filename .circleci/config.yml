@@ -38,7 +38,7 @@ jobs:
             npm run dev 8080 &
             SERVER_PID=$!
             sleep 5
-            npm run test:api
+            test:api-tests
             kill $SERVER_PID
             set -e
 
