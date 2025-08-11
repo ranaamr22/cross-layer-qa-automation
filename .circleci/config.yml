@@ -79,6 +79,13 @@ jobs:
             kill $SERVER_PID
             exit $EXIT_CODE
 
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+          destination: api-test-report
+
 
 workflows:
   version: 2

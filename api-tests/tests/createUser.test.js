@@ -112,9 +112,16 @@ describe('Create User Tests', () => {
     expect(res.status).toBe(400);
     
   });
-  test.only('POST /api/v1/users with already existing mail → 400 ', async () => {
+  test('POST /api/v1/users with already existing mail → 400 ', async () => {
 
-    const res1 =await api
+    await api
+      .delete(deleteAllUsers_endpoint)
+      .send(
+        {
+           "key_admin": "keyadmin123"
+        }
+      );
+   await api
       .post(create_user_endpoint)
       .send({
         "name": "test",
@@ -127,6 +134,13 @@ describe('Create User Tests', () => {
         "name": "test",
         "email": "test@gmail.com",
         "password": "test123"});
+    await api
+      .delete(deleteAllUsers_endpoint)
+      .send(
+        {
+           "key_admin": "keyadmin123"
+        }
+      );
 
     expect(res.status).toBe(400);
     
