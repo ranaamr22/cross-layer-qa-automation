@@ -43,7 +43,7 @@ describe('DELETE USER BY TOKEN', () => {
       .set('Authorization', token);
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('message', 'User deleted with success');
+    expect(response.body).toHaveProperty('message', 'User deleted with success!');
   });
 
   test('DELETE /api/v1/users with missing token → 403 ', async () => {
@@ -88,6 +88,5 @@ describe('Delete user already deleted before', () => {
     expect(res.status).toBe(403);
   });
 });
-
 
 
