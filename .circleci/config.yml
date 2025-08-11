@@ -80,11 +80,11 @@ jobs:
             exit $EXIT_CODE
 
       - store_test_results:
-          path: test-reports
+          path: reports
 
       - store_artifacts:
-          path: test-reports
-          destination: api-test-report
+          path: reports
+          destination: test-report
 
 
 workflows:
