@@ -1,4 +1,5 @@
 const request = require('supertest');
+const { faker } = require('@faker-js/faker');
 
 const PORT = process.env.MOCK_AUTH_PORT || '8080';
 const BASE = `http://localhost:${PORT}`;
@@ -6,13 +7,32 @@ const api = request(BASE);
 const auth_endpoint = '/api/v1/auth';
 
 describe('Authentication & Authorization Tests', () => {
+
+  let email = faker.internet.email();
+  const password = 'Test@123';
+
+  beforeAll(async () => {
+    try {
+      // Create user
+      const createRes = await api.post('/api/v1/users').send({
+        name: 'Test User',
+        email,
+        password
+      });
+      expect(createRes.status).toBe(200);
+
+    } catch (err) {
+      console.error('Error in beforeAll:', err);
+      throw err;
+    }
+  });
   
   test('POST /api/v1/auth with valid input → 200 ', async () => {
     const res = await api
       .post(auth_endpoint)
       .send({
-        "email": "user@gmail.com",
-        "password": "user123"
+        "email": email,
+        "password": password
         });
 
     expect(res.status).toBe(200);
