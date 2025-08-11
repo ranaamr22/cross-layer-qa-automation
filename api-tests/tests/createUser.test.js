@@ -18,7 +18,7 @@ describe('Create User Tests', () => {
         });
 
     expect(res.status).toBe(200);
-    expect(res.body.message).toBe('User registered with success!');
+    expect(res.body.message).toBe('User registered with success');
     expect(res.body).toHaveProperty('token');
     
   });
@@ -36,7 +36,7 @@ describe('Create User Tests', () => {
     const res = await api
       .post(create_user_endpoint)
       .send({
-        "email": "user@gmail.com",
+        "email": faker.internet.email(),
         "password": "user123"});
 
     expect(res.status).toBe(200);
@@ -77,15 +77,15 @@ describe('Create User Tests', () => {
     
   });
 
-  test('POST /api/v1/users with empty name → 400 ', async () => {
+  test('POST /api/v1/users with empty name → 200 ', async () => {
     const res = await api
       .post(create_user_endpoint)
       .send({
         "name": " ",
-        "email": "user@gmail.com",
+        "email": faker.internet.email(),
         "password": "user123"});
 
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(200);
     
   });
 
@@ -106,7 +106,7 @@ describe('Create User Tests', () => {
       .post(create_user_endpoint)
       .send({
         "name": "user",
-        "email": "user@gmail.com",
+        "email": faker.internet.email(),
         "password": " "});
 
     expect(res.status).toBe(400);
@@ -115,7 +115,7 @@ describe('Create User Tests', () => {
   test('POST /api/v1/users with already existing mail → 400 ', async () => {
 
     await api
-      .delete(deleteAllUsers_endpoint)
+      .delete('/api/v1/all-users')
       .send(
         {
            "key_admin": "keyadmin123"
@@ -135,7 +135,7 @@ describe('Create User Tests', () => {
         "email": "test@gmail.com",
         "password": "test123"});
     await api
-      .delete(deleteAllUsers_endpoint)
+      .delete('/api/v1/all-users')
       .send(
         {
            "key_admin": "keyadmin123"

@@ -1,0 +1,648 @@
+<html><head><meta charset="utf-8"/><title>API Test Report</title><style type="text/css">:root {
+  --text-primary: #111;
+  --text-secondary: #4f4f4f;
+  --success: #006633;
+  --success-bright: #80ffbf;
+  --danger: #cc071e;
+  --danger-bright: #fbdfe0;
+  --warning: #995c00;
+  --warning-bright: #ffeea8;
+  --panel: #eee;
+  --border: #949494;
+  --disabled: #6b6b6b;
+}
+
+html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+}
+body {
+  padding: 2rem 1rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+#metadata-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.additional-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/** SUMMARY */
+#summary {
+  color: var(--text-primary);
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 0.5rem;
+  background: var(--panel);
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: var(--success);
+  border-left: 0.4rem solid var(--success);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: var(--danger);
+  border-left: 0.4rem solid var(--danger);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-pending {
+  color: var(--warning);
+  border-left: 0.4rem solid var(--warning);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-empty {
+  color: var(--disabled);
+  border-left: 0.4rem solid var(--disabled);
+  margin-bottom: 0.15rem;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: var(--success-bright);
+  color: var(--success);
+}
+.test-result.failed {
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.test-result.pending {
+  background-color: var(--warning-bright);
+  color: var(--warning);
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed var(--danger);
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 1rem;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: var(--panel);
+  color: var(--text-secondary);
+  border: 0.15rem solid;
+  border-color: var(--panel);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  border-color: var(--border);
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 1rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.85rem;
+}
+.suite-info .suite-time.warn {
+  background-color: var(--danger);
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 1rem;
+  transform: rotate(180deg) translateY(0.15rem);
+}
+.suite-container[open] .suite-info:before {
+  transform: rotate(0deg) translateY(0.15rem);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--panel);
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><main class="jesthtml-content"><header><h1 id="title">API Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2025-08-11 23:37:10</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (6)</div><div class="summary-passed  summary-empty">0 passed</div><div class="summary-failed ">6 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (49)</div><div class="summary-passed ">24 passed</div><div class="summary-failed ">25 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js</div><div class="suite-time">0.999s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE ALL USERS</div><div class="test-title">DELETE /api/v1/all-users with valid input → 200 </div><div class="test-status">passed</div><div class="test-duration">0.072s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">DELETE ALL USERS</div><div class="test-title">DELETE /api/v1/all-users with empty input → 400 </div><div class="test-status">failed</div><div class="test-duration">0.013s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:33:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">DELETE ALL USERS</div><div class="test-title">DELETE /api/v1/all-users with invalid key → 400 </div><div class="test-status">failed</div><div class="test-duration">0.008s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:45:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE ALL USERS</div><div class="test-title">DELETE /api/v1/all-users with invalid Value → 403 </div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">DELETE ALL USERS</div><div class="test-title">DELETE /api/v1/all-users with empty value → 400 </div><div class="test-status">failed</div><div class="test-duration">0.006s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:69:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE ALL USERS</div><div class="test-title">DELETE /api/v1/all-users with no users → 200 </div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\getUserByToken.test.js</div><div class="suite-time">1.445s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Get User By Token</div><div class="test-title">GET /api/v1/users with valid token → 200 </div><div class="test-status">passed</div><div class="test-duration">0.041s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Get User By Token</div><div class="test-title">GET /api/v1/users with invalid token → 403 </div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Get User By Token</div><div class="test-title">GET /api/v1/users without setting token → 403 </div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Get User By Token</div><div class="test-title">GET /api/v1/users with empty token → 403 </div><div class="test-status">passed</div><div class="test-duration">0.037s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Get user that is already deleted</div><div class="test-title">GET /api/v1/users with already deleted token → 403 </div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 500
+    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:23:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\getUserByToken.test.js:101:13)</pre></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\getUserByToken.test.js:33:15)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxvdS5GZWlsQGhvdG1haWwuY29tIiwiaWQiOjE1NjI3LCJpYXQiOjE3NTQ5NDQ2MzEsImV4cCI6MTc1NTAzMTAzMX0.Pvm2Y0BYCPT5cms--8JQCwBfkQ3XeefEBaxJFCYdnR0</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:27:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\getUserByToken.test.js:101:13)</pre><pre class="suite-consolelog-item-message">Error in createAuthAndDeleteUser: JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 500
+    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:23:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\getUserByToken.test.js:101:13) {
+  matcherResult: {
+    actual: 500,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m500\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js</div><div class="suite-time">1.493s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">DELETE USER BY TOKEN</div><div class="test-title">DELETE /api/v1/users with a valid token → 200 </div><div class="test-status">failed</div><div class="test-duration">0.131s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 500
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:45:29)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE USER BY TOKEN</div><div class="test-title">DELETE /api/v1/users with missing token → 403 </div><div class="test-status">passed</div><div class="test-duration">0.047s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE USER BY TOKEN</div><div class="test-title">DELETE /api/v1/users with invalid token → 403 </div><div class="test-status">passed</div><div class="test-duration">0.081s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">DELETE USER BY TOKEN</div><div class="test-title">DELETE /api/v1/users with empty token → 403 </div><div class="test-status">passed</div><div class="test-duration">0.075s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Delete user already deleted before</div><div class="test-title">DELETE /api/v1/users with already deleted token → 403 </div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 401
+    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:9:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:80:13)</pre></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:22:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:28:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkthdGx5bm4yQGdtYWlsLmNvbSIsImlkIjo3MzkyNSwiaWF0IjoxNzU0OTQ0NjMxLCJleHAiOjE3NTUwMzEwMzF9.NvFDT_PIudrJJFL4VQ_sWPKAti5wYPNlNyseACkuMk8'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:22:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:28:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNhc3NpZV9IaWxsbEBob3RtYWlsLmNvbSIsImlkIjoxNzk1NCwiaWF0IjoxNzU0OTQ0NjMxLCJleHAiOjE3NTUwMzEwMzF9.4XepMnMiMlnydBEGmXcoh7zcZyhcwEYiLn89qiTbrOg'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:22:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:28:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IldpbGZvcmRfQWJib3R0ODRAaG90bWFpbC5jb20iLCJpZCI6MjkzNTAsImlhdCI6MTc1NDk0NDYzMSwiZXhwIjoxNzU1MDMxMDMxfQ.MEVKMVFZAd0V6A1kyknmPG1CqiI1RbQDZYLmFNzNgVk'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:22:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:28:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik9iaWVfRWZmZXJ0ekBnbWFpbC5jb20iLCJpZCI6MjkyMjAsImlhdCI6MTc1NDk0NDYzMSwiZXhwIjoxNzU1MDMxMDMxfQ.yORK3mRifpdkSjcNMRkOE7j-s9GT0LMdez1h4FVkGww'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:27:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:80:13)</pre><pre class="suite-consolelog-item-message">Error in createAuthAndDeleteUser: JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 401
+    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:9:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:80:13) {
+  matcherResult: {
+    actual: 401,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m401\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js</div><div class="suite-time">1.519s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with valid input → 200 </div><div class="test-status">passed</div><div class="test-duration">0.05s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with unmatched mail and password → 401 </div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with missing body → 400</div><div class="test-status">failed</div><div class="test-duration">0.027s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:58:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with missing mail only → 400</div><div class="test-status">failed</div><div class="test-duration">0.024s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:68:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with missing Password only → 400</div><div class="test-status">failed</div><div class="test-duration">0.009s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:77:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with invalid mail structure → 400</div><div class="test-status">failed</div><div class="test-duration">0.02s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:87:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with empty mail → 400</div><div class="test-status">failed</div><div class="test-duration">0.028s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:97:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Authentication &amp; Authorization Tests</div><div class="test-title">POST /api/v1/auth with empty password → 400</div><div class="test-status">failed</div><div class="test-duration">0.026s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:108:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Deleted user cannot authorize</div><div class="test-title">Authorization with deleted user token → 401</div><div class="test-status">failed</div><div class="test-duration"> </div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:23:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:120:13)</pre></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:27:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:120:13)</pre><pre class="suite-consolelog-item-message">Error in createAuthAndDeleteUser: JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:23:30)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:120:13) {
+  matcherResult: {
+    actual: 403,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m403\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js</div><div class="suite-time">1.527s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with valid input → 200 </div><div class="test-status">failed</div><div class="test-duration">0.08s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toHaveProperty(path)
+
+Expected path: "token"
+Received path: []
+
+Received value: {"message": "User registered with success"}
+    at Object.toHaveProperty (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:22:22)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with empty input → 400 </div><div class="test-status">failed</div><div class="test-duration">0.015s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:31:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with missing name → 200 </div><div class="test-status">passed</div><div class="test-duration">0.036s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with missing email → 400 </div><div class="test-status">failed</div><div class="test-duration">0.026s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:53:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with missing password → 400 </div><div class="test-status">failed</div><div class="test-duration">0.014s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:64:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with invalid mail format → 400 </div><div class="test-status">failed</div><div class="test-duration">0.026s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:76:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with empty name → 200 </div><div class="test-status">passed</div><div class="test-duration">0.026s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with empty email → 400 </div><div class="test-status">failed</div><div class="test-duration">0.028s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:100:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with empty password → 400 </div><div class="test-status">failed</div><div class="test-duration">0.041s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:112:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Create User Tests</div><div class="test-title">POST /api/v1/users with already existing mail → 400 </div><div class="test-status">failed</div><div class="test-duration">0.053s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:145:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js</div><div class="suite-time">1.795s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with valid token → 200</div><div class="test-status">passed</div><div class="test-duration">0.168s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with invalid token → 403</div><div class="test-status">passed</div><div class="test-duration">0.105s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users without setting token → 403</div><div class="test-status">passed</div><div class="test-duration">0.091s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users without empty token → 403</div><div class="test-status">passed</div><div class="test-duration">0.027s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with updated name only → 200</div><div class="test-status">passed</div><div class="test-duration">0.034s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with updated mail only → 200</div><div class="test-status">passed</div><div class="test-duration">0.026s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with updated password only → 200</div><div class="test-status">passed</div><div class="test-duration">0.028s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with updated mail and password  → 200</div><div class="test-status">passed</div><div class="test-duration">0.029s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with empty request body → 400</div><div class="test-status">failed</div><div class="test-duration">0.019s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:142:33)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with invalid email formate → 400</div><div class="test-status">failed</div><div class="test-duration">0.027s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:152:33)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with empty email → 400</div><div class="test-status">failed</div><div class="test-duration">0.027s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:162:33)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with empty password → 400</div><div class="test-status">failed</div><div class="test-duration">0.027s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:172:33)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with the same data as existed → 200</div><div class="test-status">passed</div><div class="test-duration">0.021s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">PATCH USER BY TOKEN</div><div class="test-title">PATCH /api/v1/users with an extra field → 200</div><div class="test-status">passed</div><div class="test-duration">0.02s</div></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6MjYyNTcsImlhdCI6MTc1NDk0NDYzMSwiZXhwIjoxNzU1MDMxMDMxfQ.m7idXUUu2lHq2dVo5oKLKgEmPB3zympIJv_18GlBf1k'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:211:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  matcherResult: {
+    actual: 403,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m403\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6MjAyMCwiaWF0IjoxNzU0OTQ0NjMxLCJleHAiOjE3NTUwMzEwMzF9.YRDwYLdy4LwL21y1IQQYRwYug4y0GUCdjuJn4LTmbCI'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 500
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:211:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  matcherResult: {
+    actual: 500,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m500\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 401 { message: 'Incorrect email or password' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): TypeError: Invalid value "undefined" for header "Authorization"
+    at ClientRequest.setHeader (node:_http_outgoing:703:3)
+    at Test.setHeader [as request] (C:\Users\Rana\Documents\cross-layer-qa-automation\node_modules\superagent\src\node\index.js:830:39)
+    at Test.request [as end] (C:\Users\Rana\Documents\cross-layer-qa-automation\node_modules\superagent\src\node\index.js:965:8)
+    at Test.end (C:\Users\Rana\Documents\cross-layer-qa-automation\node_modules\supertest\lib\test.js:136:11)
+    at end (C:\Users\Rana\Documents\cross-layer-qa-automation\node_modules\superagent\src\request-base.js:283:12)
+    at new Promise (&lt;anonymous&gt;)
+    at Test.RequestBase.then (C:\Users\Rana\Documents\cross-layer-qa-automation\node_modules\superagent\src\request-base.js:265:31)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: 'ERR_HTTP_INVALID_HEADER_VALUE'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NzA1MTksImlhdCI6MTc1NDk0NDYzMSwiZXhwIjoxNzU1MDMxMDMxfQ.9jds8wAN8hXRRxW13SC9ko1tlKpHD_WuyOohJpr0gVQ'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NzA3NDYsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.ByZQYi7JoZ99z1uCIq4swzFItgbf3aJ3Ogd76mUagWU'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NTMxODgsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.YEoEwZzjjJcPpey2qMpGFKf5Vd52ktEqqQdmaSR4ws4'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:211:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  matcherResult: {
+    actual: 403,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m403\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NjQ1MjIsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.WNYot5JN8B3XKMPAR88C3LdAhfR1kZcwmH-AnWP3vH4'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NDcxMzgsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.T33u1QDmSwuHtx_vozCBsUpwfdabyXIb2-DeUh34nZs'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:211:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  matcherResult: {
+    actual: 403,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m403\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NzE4NjUsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.UR4y3h1CanKUPX03j0X3kfSeYUM6MOuS-4fxa1sgsss'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NDMxNTMsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.6pCdQGsXIBmWL58PT4xFKH7erBs3iVD2_vBkE6ivMdI'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:211:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  matcherResult: {
+    actual: 403,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m403\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6Mjg4OTcsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.PDnysCWgySMxOHhCfUoP4mbufWiQCTJN60uYLQrnNWI'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.error (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:213:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Error in afterEach (deleting user): JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:211:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  matcherResult: {
+    actual: 403,
+    expected: 200,
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoBe\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // Object.is equality\x1B[22m\n' +
+      '\n' +
+      'Expected: \x1B[32m200\x1B[39m\n' +
+      'Received: \x1B[31m403\x1B[39m',
+    name: 'toBe',
+    pass: false
+  }
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NDcxMjksImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.BVVbgCIzq94llSl9V6WzQhb52Ct05eqaFrV3V0XWtq8'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NTgzMDQsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.6PYKZSiBjChOuLH3Qb2VXrXNXywBRKRDeC5Ig5K8QDk'
+}</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:20:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Create user response: 200 { message: 'User registered with success' }</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.log (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:26:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</pre><pre class="suite-consolelog-item-message">Auth response: 200 {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlRoZW9kb3JlLktvc3M4MkB5YWhvby5jb20iLCJpZCI6NzM0NTcsImlhdCI6MTc1NDk0NDYzMiwiZXhwIjoxNzU1MDMxMDMyfQ.PgNU5AVuGi-5Rt0jgOgDRBB8w2iaCKhHqv2XlOgijV4'
+}</pre></div></div></details></main></body></html>
