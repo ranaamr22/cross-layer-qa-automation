@@ -79,6 +79,7 @@ Start Mock API Server (for API tests)
 npm run dev
 ```
 Run All UI Tests
+
 ```bash
 npm run test:ui-tests 
 ```

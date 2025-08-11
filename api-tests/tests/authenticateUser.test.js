@@ -1,17 +1,15 @@
 const request = require('supertest');
-require('regenerator-runtime/runtime'); // ensure async/await works
 
 const PORT = process.env.MOCK_AUTH_PORT || '8080';
 const BASE = `http://localhost:${PORT}`;
 const api = request(BASE);
-
-let token; // store token from successful login
+const auth_endpoint = '/api/v1/auth';
 
 describe('Authentication & Authorization Tests', () => {
-  // -------- AUTHENTICATE USER --------
+  
   test('POST /api/v1/auth with valid input → 200 ', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "email": "user@gmail.com",
         "password": "user123"
@@ -19,13 +17,11 @@ describe('Authentication & Authorization Tests', () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('token');
-    console.log(res.body);
-    
   });
 
   test('POST /api/v1/auth with unmatched mail and password → 401 ', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "email": "user@gmail.com",
         "password": "user"
@@ -36,7 +32,7 @@ describe('Authentication & Authorization Tests', () => {
 
   test('POST /api/v1/auth with missing body → 400', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({}); 
     expect(res.status).toBe(400);
   });
@@ -44,7 +40,7 @@ describe('Authentication & Authorization Tests', () => {
 
   test('POST /api/v1/auth with missing mail only → 400', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "password": "user123"
       }); 
@@ -53,7 +49,7 @@ describe('Authentication & Authorization Tests', () => {
   
   test('POST /api/v1/auth with missing Password only → 400', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "email": "user@gmail.com"
       }); 
@@ -62,7 +58,7 @@ describe('Authentication & Authorization Tests', () => {
   
   test('POST /api/v1/auth with invalid mail structure → 400', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "email": "usergmail",
         "password": "user123"
@@ -72,17 +68,18 @@ describe('Authentication & Authorization Tests', () => {
 
   test('POST /api/v1/auth with empty mail → 400', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "email": " ",
         "password": "user123"
       }); 
     expect(res.status).toBe(400);
+
   });
 
   test('POST /api/v1/auth with empty password → 400', async () => {
     const res = await api
-      .post('/api/v1/auth')
+      .post(auth_endpoint)
       .send({
         "email": "user@gmail.com ",
         "password": " "
@@ -91,4 +88,52 @@ describe('Authentication & Authorization Tests', () => {
   });
   
 
+});
+
+describe('Deleted user cannot authorize', () => {
+  let token;
+  let email = 'test@gmail.com';
+  const password = 'test123';
+
+  beforeAll(async () => {
+    try {
+      // Create user
+      const createRes = await api.post('/api/v1/users').send({
+        name: 'Test User',
+        email,
+        password
+      });
+      expect(createRes.status).toBe(200);
+
+
+      // Authenticate user
+      const authRes = await api.post(auth_endpoint).send({
+        email,
+        password
+      });
+      expect(authRes.status).toBe(200);
+      token = authRes.body.token;
+      
+      // Delete user
+      const deleteRes = await api
+        .delete('/api/v1/users')
+        .set('Authorization', token);
+      expect(deleteRes.status).toBe(200);
+
+    } catch (err) {
+      console.error('Error in beforeAll:', err);
+      throw err;
+    }
+  });
+
+  test('Authorization with deleted user token → 401', async () => {
+    const res = await api
+      .post(auth_endpoint)
+      .send({
+        email,
+        password
+      });
+
+    expect(res.status).toBe(401);
+  });
 });
