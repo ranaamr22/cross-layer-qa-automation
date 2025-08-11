@@ -79,13 +79,18 @@ jobs:
             kill $SERVER_PID
             exit $EXIT_CODE
 
+      - run:
+        name: Run Jest tests with reporters (CLI)
+        command: |
+          mkdir -p reports
+          # Run Jest with both JUnit XML and HTML reporters outputting to ./reports
+          JEST_JUNIT_OUTPUT_DIR=reports JEST_JUNIT_OUTPUT_NAME=junit.xml npx jest --reporters=default --reporters=jest-junit
+          npx jest-html-reporter --config=./jesthtmlreporter.config.json
+
       - store_test_results:
           path: reports
-
       - store_artifacts:
           path: reports
-          destination: test-report
-
 
 workflows:
   version: 2
