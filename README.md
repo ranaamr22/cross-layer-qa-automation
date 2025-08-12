@@ -1,11 +1,45 @@
 # cross-layer-qa-automation [![CircleCI](https://dl.circleci.com/status-badge/img/gh/ranaamr22/cross-layer-qa-automation/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/ranaamr22/cross-layer-qa-automation/tree/main)
 
 
-A complete end-to-end test automation framework covering UI and API testing using NightwatchJS, Supertest, and CircleCI. Includes test cases, bug reports, CI/CD pipeline, and HTML test reports.
+A complete end-to-end test automation framework integrating **UI and API testing** using:
+
+- [NightwatchJS](https://nightwatchjs.org) for UI testing  
+- [Supertest](https://github.com/visionmedia/supertest) for API testing  
+- [CircleCI](https://circleci.com) for CI/CD automation  
+- HTML & JUnit reporters for test results and visibility
+
+---
+
+## Features
+
+### UI Tests for:
+
+- **Amazonaws**   
+- **LinkedIn Registration Page** – Real-world form interaction tests  
+- **MyStore Demo** – E-commerce UI testing
+
+### API Tests for:
+
+- **mock-user-auth** – Simulates user authentication & authorization flow  
+- Covers: login, register, get, patch, delete, and access control edge cases
+
+---
+
+## CI/CD Pipeline
+
+- Configured with **CircleCI** to automatically:
+  - Install dependencies
+  - Run UI and API test suites
+---
 
 # Test Scripts Documentation
 
-This project includes automated UI tests using Nightwatch.js for end-to-end testing of web applications.
+This project includes automated **UI and API tests** for various web applications.
+
+📂 A **demo video**, **test reports** (UI & API), and a **PDF containing all test cases and bug tickets** are available at the link below:
+
+🔗 **[View Documentation, Reports & Demo](https://drive.google.com/drive/u/1/folders/1j-EnZDq77R4LNO7IpUhBYVMFabojHzSB)**
+
 
 ## Available Test Scripts
 
@@ -13,9 +47,9 @@ This project includes automated UI tests using Nightwatch.js for end-to-end test
 ```bash
 npm run test:amazonaws
 ```
-- **Purpose**: Runs automated tests for AWS-related functionality
+- **Purpose**: Runs automated tests for amazonaws-related functionality
 - **Configuration**: Uses `ui-tests/amazonaws/nightwatch.conf.js`
-- **Target**: Amazon Web Services interfaces and workflows
+- **Target**: amazonaws Web Services interfaces and workflows
 
 ### LinkedIn Registration Page Tests
 ```bash
@@ -24,6 +58,15 @@ npm run test:linkedinRegisterationPage
 - **Purpose**: Tests LinkedIn registration page functionality
 - **Configuration**: Uses `ui-tests/linkedinRegisterationPage/nightwatch.conf.js`
 - **Target**: LinkedIn user registration flow and form validation
+
+### myStore Test Suite
+```bash
+npm run test:myStore
+```
+- **Purpose**: Runs automated tests for myStore-related functionality
+- **Configuration**: Uses `ui-tests\myStore\nightwatch.conf.js`
+- **Target**: My Store (multiformis.com) Web Services interfaces and workflows
+
 
 ## Prerequisites
 
@@ -41,15 +84,39 @@ Before running the tests, ensure you have:
 
 ```
 project-root/
+├── .circleci/
+│   └── config.yml                   # CircleCI CI/CD pipeline 
+│
+├── api-tests/
+│   └── tests/                       # API test cases using Supertest
+│       ├── authenticateUser.test.js
+│       ├── createUser.test.js
+│       ├── deleteAllUsers.test.js
+│       ├── deleteUserByToken.test.js
+│       ├── getUserByToken.test.js
+│       ├── patchUserByToken.test.js
+│       └── userUtils.js            # Helper functions for API tests
+│
+├── reports/                         # Test reports 
+│   ├── junit.xml
+│   └── test-report.html
+│
+├── tests_output/                    # Nightwatch test output (auto-generated)
+│
+├── ui-tests/
+│   ├── amazonaws/                   # UI tests for AmazonAWS dummy site
+│   ├── linkedinRegisterationPage/  # UI tests for LinkedIn registration 
+│   └── myStore/                     # UI tests for MyStore app
+│       ├── page-objects/           # Nightwatch Page Object Models
+│       ├── tests/                  # UI test scripts
+│       └── nightwatch.conf.js      # Project-specific Nightwatch config
+│
+├── .gitignore
+├── .nvmrc
+├── jest.config.js                  # Jest configuration for API tests
+├── nightwatch.conf.js              # Root Nightwatch configuration
 ├── package.json
 ├── package-lock.json
-├── ui-tests/
-│   ├── amazonaws/
-│   │   ├── nightwatch.conf.js
-│   │   └── tests/
-│   └── linkedinRegisterationPage/
-│       ├── nightwatch.conf.js
-│       └── tests/
 └── README.md
 ```
 
@@ -87,8 +154,6 @@ npm run test:ui-tests
 For development and debugging, you can run tests with additional options:
 
 ```bash
-# Run with verbose output
-npx nightwatch --config ui-tests/amazonaws/nightwatch.conf.js --verbose
 
 # Run specific test file
 npx nightwatch --config ui-tests/amazonaws/nightwatch.conf.js tests/specific-test.js
@@ -103,6 +168,9 @@ Each test suite has its own Nightwatch configuration file:
 
 - **AWS Tests**: `ui-tests/amazonaws/nightwatch.conf.js`
 - **LinkedIn Tests**: `ui-tests/linkedinRegisterationPage/nightwatch.conf.js`
+- **My Store Tests**: `ui-tests\myStore\nightwatch.conf.js`
+- **API Tests**: `jest.config.js`
+
 
 These configurations define:
 - Browser settings
