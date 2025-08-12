@@ -1,146 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="49" failures="25" errors="0" time="2.794">
-  <testsuite name="DELETE ALL USERS" errors="0" failures="3" skipped="0" timestamp="2025-08-11T20:37:10" time="0.999" tests="6">
-    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with valid input → 200 " name="DELETE ALL USERS DELETE /api/v1/all-users with valid input → 200 " time="0.072">
+<testsuites name="jest tests" tests="49" failures="21" errors="0" time="2.674">
+  <testsuite name="PATCH USER BY TOKEN" errors="0" failures="4" skipped="0" timestamp="2025-08-12T09:37:41" time="1.079" tests="14">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with valid token → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with valid token → 200" time="0.082">
     </testcase>
-    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with empty input → 400 " name="DELETE ALL USERS DELETE /api/v1/all-users with empty input → 400 " time="0.013">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 400
-Received: 403
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:33:24)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with invalid token → 403" name="PATCH USER BY TOKEN PATCH /api/v1/users with invalid token → 403" time="0.021">
     </testcase>
-    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with invalid key → 400 " name="DELETE ALL USERS DELETE /api/v1/all-users with invalid key → 400 " time="0.008">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 400
-Received: 403
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:45:24)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users without setting token → 403" name="PATCH USER BY TOKEN PATCH /api/v1/users without setting token → 403" time="0.02">
     </testcase>
-    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with invalid Value → 403 " name="DELETE ALL USERS DELETE /api/v1/all-users with invalid Value → 403 " time="0.007">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users without empty token → 403" name="PATCH USER BY TOKEN PATCH /api/v1/users without empty token → 403" time="0.021">
     </testcase>
-    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with empty value → 400 " name="DELETE ALL USERS DELETE /api/v1/all-users with empty value → 400 " time="0.006">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 400
-Received: 403
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:69:24)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated name only → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated name only → 200" time="0.019">
     </testcase>
-    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with no users → 200 " name="DELETE ALL USERS DELETE /api/v1/all-users with no users → 200 " time="0.012">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail only → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail only → 200" time="0.028">
     </testcase>
-  </testsuite>
-  <testsuite name="Get User By Token" errors="0" failures="1" skipped="0" timestamp="2025-08-11T20:37:10" time="1.445" tests="5">
-    <testcase classname="Get User By Token GET /api/v1/users with valid token → 200 " name="Get User By Token GET /api/v1/users with valid token → 200 " time="0.041">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated password only → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated password only → 200" time="0.028">
     </testcase>
-    <testcase classname="Get User By Token GET /api/v1/users with invalid token → 403 " name="Get User By Token GET /api/v1/users with invalid token → 403 " time="0.008">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail and password  → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail and password  → 200" time="0.026">
     </testcase>
-    <testcase classname="Get User By Token GET /api/v1/users without setting token → 403 " name="Get User By Token GET /api/v1/users without setting token → 403 " time="0.012">
-    </testcase>
-    <testcase classname="Get User By Token GET /api/v1/users with empty token → 403 " name="Get User By Token GET /api/v1/users with empty token → 403 " time="0.037">
-    </testcase>
-    <testcase classname="Get user that is already deleted GET /api/v1/users with already deleted token → 403 " name="Get user that is already deleted GET /api/v1/users with already deleted token → 403 " time="0">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 200
-Received: 500
-    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:23:30)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\getUserByToken.test.js:101:13)</failure>
-    </testcase>
-  </testsuite>
-  <testsuite name="DELETE USER BY TOKEN" errors="0" failures="2" skipped="0" timestamp="2025-08-11T20:37:10" time="1.493" tests="5">
-    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with a valid token → 200 " name="DELETE USER BY TOKEN DELETE /api/v1/users with a valid token → 200 " time="0.131">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 200
-Received: 500
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:45:29)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
-    </testcase>
-    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with missing token → 403 " name="DELETE USER BY TOKEN DELETE /api/v1/users with missing token → 403 " time="0.047">
-    </testcase>
-    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with invalid token → 403 " name="DELETE USER BY TOKEN DELETE /api/v1/users with invalid token → 403 " time="0.081">
-    </testcase>
-    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with empty token → 403 " name="DELETE USER BY TOKEN DELETE /api/v1/users with empty token → 403 " time="0.075">
-    </testcase>
-    <testcase classname="Delete user already deleted before DELETE /api/v1/users with already deleted token → 403 " name="Delete user already deleted before DELETE /api/v1/users with already deleted token → 403 " time="0">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 200
-Received: 401
-    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:9:30)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteUserByToken.test.js:80:13)</failure>
-    </testcase>
-  </testsuite>
-  <testsuite name="Authentication &amp; Authorization Tests" errors="0" failures="7" skipped="0" timestamp="2025-08-11T20:37:10" time="1.519" tests="9">
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with valid input → 200 " name="Authentication &amp; Authorization Tests POST /api/v1/auth with valid input → 200 " time="0.05">
-    </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with unmatched mail and password → 401 " name="Authentication &amp; Authorization Tests POST /api/v1/auth with unmatched mail and password → 401 " time="0.014">
-    </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with missing body → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with missing body → 400" time="0.027">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with empty request body → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with empty request body → 400" time="0.03">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
 Received: 200
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:58:24)
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:144:33)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with missing mail only → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with missing mail only → 400" time="0.024">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with invalid email formate → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with invalid email formate → 400" time="0.019">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 401
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:68:24)
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:154:33)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with missing Password only → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with missing Password only → 400" time="0.009">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with empty email → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with empty email → 400" time="0.028">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 401
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:77:24)
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:164:33)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with invalid mail structure → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with invalid mail structure → 400" time="0.02">
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with empty password → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with empty password → 400" time="0.032">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 401
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:87:24)
+Received: 200
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:174:33)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with empty mail → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with empty mail → 400" time="0.028">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 400
-Received: 401
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:97:24)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with the same data as existed → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with the same data as existed → 200" time="0.029">
     </testcase>
-    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with empty password → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with empty password → 400" time="0.026">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 400
-Received: 401
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:108:24)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
-    </testcase>
-    <testcase classname="Deleted user cannot authorize Authorization with deleted user token → 401" name="Deleted user cannot authorize Authorization with deleted user token → 401" time="0">
-      <failure>Error: expect(received).toBe(expected) // Object.is equality
-
-Expected: 200
-Received: 403
-    at toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\userUtils.js:23:30)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at Object.&lt;anonymous&gt; (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:120:13)</failure>
+    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with an extra field → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with an extra field → 200" time="0.02">
     </testcase>
   </testsuite>
-  <testsuite name="Create User Tests" errors="0" failures="8" skipped="0" timestamp="2025-08-11T20:37:10" time="1.527" tests="10">
-    <testcase classname="Create User Tests POST /api/v1/users with valid input → 200 " name="Create User Tests POST /api/v1/users with valid input → 200 " time="0.08">
+  <testsuite name="Create User Tests" errors="0" failures="8" skipped="0" timestamp="2025-08-12T09:37:42" time="0.327" tests="10">
+    <testcase classname="Create User Tests POST /api/v1/users with valid input → 200 " name="Create User Tests POST /api/v1/users with valid input → 200 " time="0.008">
       <failure>Error: expect(received).toHaveProperty(path)
 
 Expected path: &quot;token&quot;
@@ -150,7 +65,7 @@ Received value: {&quot;message&quot;: &quot;User registered with success&quot;}
     at Object.toHaveProperty (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:22:22)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with empty input → 400 " name="Create User Tests POST /api/v1/users with empty input → 400 " time="0.015">
+    <testcase classname="Create User Tests POST /api/v1/users with empty input → 400 " name="Create User Tests POST /api/v1/users with empty input → 400 " time="0.013">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
@@ -158,9 +73,9 @@ Received: 200
     at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:31:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with missing name → 200 " name="Create User Tests POST /api/v1/users with missing name → 200 " time="0.036">
+    <testcase classname="Create User Tests POST /api/v1/users with missing name → 200 " name="Create User Tests POST /api/v1/users with missing name → 200 " time="0.014">
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with missing email → 400 " name="Create User Tests POST /api/v1/users with missing email → 400 " time="0.026">
+    <testcase classname="Create User Tests POST /api/v1/users with missing email → 400 " name="Create User Tests POST /api/v1/users with missing email → 400 " time="0.003">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
@@ -168,7 +83,7 @@ Received: 401
     at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:53:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with missing password → 400 " name="Create User Tests POST /api/v1/users with missing password → 400 " time="0.014">
+    <testcase classname="Create User Tests POST /api/v1/users with missing password → 400 " name="Create User Tests POST /api/v1/users with missing password → 400 " time="0.01">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
@@ -176,7 +91,7 @@ Received: 200
     at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:64:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with invalid mail format → 400 " name="Create User Tests POST /api/v1/users with invalid mail format → 400 " time="0.026">
+    <testcase classname="Create User Tests POST /api/v1/users with invalid mail format → 400 " name="Create User Tests POST /api/v1/users with invalid mail format → 400 " time="0.016">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
@@ -184,17 +99,17 @@ Received: 200
     at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:76:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with empty name → 200 " name="Create User Tests POST /api/v1/users with empty name → 200 " time="0.026">
+    <testcase classname="Create User Tests POST /api/v1/users with empty name → 200 " name="Create User Tests POST /api/v1/users with empty name → 200 " time="0.015">
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with empty email → 400 " name="Create User Tests POST /api/v1/users with empty email → 400 " time="0.028">
+    <testcase classname="Create User Tests POST /api/v1/users with empty email → 400 " name="Create User Tests POST /api/v1/users with empty email → 400 " time="0.005">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 200
+Received: 401
     at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:100:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with empty password → 400 " name="Create User Tests POST /api/v1/users with empty password → 400 " time="0.041">
+    <testcase classname="Create User Tests POST /api/v1/users with empty password → 400 " name="Create User Tests POST /api/v1/users with empty password → 400 " time="0.01">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
@@ -202,7 +117,7 @@ Received: 200
     at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\createUser.test.js:112:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="Create User Tests POST /api/v1/users with already existing mail → 400 " name="Create User Tests POST /api/v1/users with already existing mail → 400 " time="0.053">
+    <testcase classname="Create User Tests POST /api/v1/users with already existing mail → 400 " name="Create User Tests POST /api/v1/users with already existing mail → 400 " time="0.032">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
@@ -211,58 +126,116 @@ Received: 401
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
   </testsuite>
-  <testsuite name="PATCH USER BY TOKEN" errors="0" failures="4" skipped="0" timestamp="2025-08-11T20:37:10" time="1.795" tests="14">
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with valid token → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with valid token → 200" time="0.168">
+  <testsuite name="Authentication &amp; Authorization Tests" errors="0" failures="6" skipped="0" timestamp="2025-08-12T09:37:43" time="0.41" tests="9">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with valid input → 200 " name="Authentication &amp; Authorization Tests POST /api/v1/auth with valid input → 200 " time="0.004">
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with invalid token → 403" name="PATCH USER BY TOKEN PATCH /api/v1/users with invalid token → 403" time="0.105">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with unmatched mail and password → 401 " name="Authentication &amp; Authorization Tests POST /api/v1/auth with unmatched mail and password → 401 " time="0.003">
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users without setting token → 403" name="PATCH USER BY TOKEN PATCH /api/v1/users without setting token → 403" time="0.091">
-    </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users without empty token → 403" name="PATCH USER BY TOKEN PATCH /api/v1/users without empty token → 403" time="0.027">
-    </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated name only → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated name only → 200" time="0.034">
-    </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail only → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail only → 200" time="0.026">
-    </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated password only → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated password only → 200" time="0.028">
-    </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail and password  → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with updated mail and password  → 200" time="0.029">
-    </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with empty request body → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with empty request body → 400" time="0.019">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with missing body → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with missing body → 400" time="0.004">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 200
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:142:33)
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:57:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with invalid email formate → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with invalid email formate → 400" time="0.027">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with missing mail only → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with missing mail only → 400" time="0.003">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 200
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:152:33)
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:67:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with empty email → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with empty email → 400" time="0.027">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with missing Password only → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with missing Password only → 400" time="0.004">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 200
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:162:33)
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:76:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with empty password → 400" name="PATCH USER BY TOKEN PATCH /api/v1/users with empty password → 400" time="0.027">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with invalid mail structure → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with invalid mail structure → 400" time="0.007">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: 400
-Received: 200
-    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\patchUserByToken.test.js:172:33)
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:86:24)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with the same data as existed → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with the same data as existed → 200" time="0.021">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with empty mail → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with empty mail → 400" time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:96:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
     </testcase>
-    <testcase classname="PATCH USER BY TOKEN PATCH /api/v1/users with an extra field → 200" name="PATCH USER BY TOKEN PATCH /api/v1/users with an extra field → 200" time="0.02">
+    <testcase classname="Authentication &amp; Authorization Tests POST /api/v1/auth with empty password → 400" name="Authentication &amp; Authorization Tests POST /api/v1/auth with empty password → 400" time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 401
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\authenticateUser.test.js:107:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="Deleted user cannot authorize Authorization with deleted user token → 401" name="Deleted user cannot authorize Authorization with deleted user token → 401" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="DELETE ALL USERS" errors="0" failures="3" skipped="0" timestamp="2025-08-12T09:37:43" time="0.132" tests="6">
+    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with valid input → 200 " name="DELETE ALL USERS DELETE /api/v1/all-users with valid input → 200 " time="0.005">
+    </testcase>
+    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with empty input → 400 " name="DELETE ALL USERS DELETE /api/v1/all-users with empty input → 400 " time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:32:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with invalid key → 400 " name="DELETE ALL USERS DELETE /api/v1/all-users with invalid key → 400 " time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:44:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with invalid Value → 403 " name="DELETE ALL USERS DELETE /api/v1/all-users with invalid Value → 403 " time="0.004">
+    </testcase>
+    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with empty value → 400 " name="DELETE ALL USERS DELETE /api/v1/all-users with empty value → 400 " time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 400
+Received: 403
+    at Object.toBe (C:\Users\Rana\Documents\cross-layer-qa-automation\api-tests\tests\deleteAllUsers.test.js:68:24)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="DELETE ALL USERS DELETE /api/v1/all-users with no users → 200 " name="DELETE ALL USERS DELETE /api/v1/all-users with no users → 200 " time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="DELETE USER BY TOKEN" errors="0" failures="0" skipped="0" timestamp="2025-08-12T09:37:43" time="0.281" tests="5">
+    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with a valid token → 200 " name="DELETE USER BY TOKEN DELETE /api/v1/users with a valid token → 200 " time="0.02">
+    </testcase>
+    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with missing token → 403 " name="DELETE USER BY TOKEN DELETE /api/v1/users with missing token → 403 " time="0.011">
+    </testcase>
+    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with invalid token → 403 " name="DELETE USER BY TOKEN DELETE /api/v1/users with invalid token → 403 " time="0.011">
+    </testcase>
+    <testcase classname="DELETE USER BY TOKEN DELETE /api/v1/users with empty token → 403 " name="DELETE USER BY TOKEN DELETE /api/v1/users with empty token → 403 " time="0.012">
+    </testcase>
+    <testcase classname="Delete user already deleted before DELETE /api/v1/users with already deleted token → 403 " name="Delete user already deleted before DELETE /api/v1/users with already deleted token → 403 " time="0.018">
+    </testcase>
+  </testsuite>
+  <testsuite name="Get User By Token" errors="0" failures="0" skipped="0" timestamp="2025-08-12T09:37:43" time="0.248" tests="5">
+    <testcase classname="Get User By Token GET /api/v1/users with valid token → 200 " name="Get User By Token GET /api/v1/users with valid token → 200 " time="0.005">
+    </testcase>
+    <testcase classname="Get User By Token GET /api/v1/users with invalid token → 403 " name="Get User By Token GET /api/v1/users with invalid token → 403 " time="0.003">
+    </testcase>
+    <testcase classname="Get User By Token GET /api/v1/users without setting token → 403 " name="Get User By Token GET /api/v1/users without setting token → 403 " time="0.003">
+    </testcase>
+    <testcase classname="Get User By Token GET /api/v1/users with empty token → 403 " name="Get User By Token GET /api/v1/users with empty token → 403 " time="0.003">
+    </testcase>
+    <testcase classname="Get user that is already deleted GET /api/v1/users with already deleted token → 403 " name="Get user that is already deleted GET /api/v1/users with already deleted token → 403 " time="0.003">
     </testcase>
   </testsuite>
 </testsuites>
