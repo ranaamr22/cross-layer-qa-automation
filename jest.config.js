@@ -15,5 +15,6 @@ module.exports = {
       outputDirectory: './reports',
       outputName: 'junit.xml'
     }]
-  ]
+  ],
+  maxWorkers: 1
 };

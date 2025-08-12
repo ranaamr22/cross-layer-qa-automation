@@ -1,5 +1,4 @@
 const request = require('supertest');
-require('regenerator-runtime/runtime'); // ensure async/await works
 
 const PORT = process.env.MOCK_AUTH_PORT || '8080';
 const BASE = `http://localhost:${PORT}`;
