@@ -1,5 +1,5 @@
-const request = require('supertest');
-const { faker } = require('@faker-js/faker');
+import { request } from 'supertest';
+import { faker } from '@faker-js/faker';
 
 const PORT = process.env.MOCK_AUTH_PORT || '8080';
 const BASE = `http://localhost:${PORT}`;

@@ -1,4 +1,4 @@
-async function createAuthAndDeleteUser(api, email, password) {
+export async function createAuthAndDeleteUser(api, email, password) {
   try {
     // Create user
     const createRes = await api.post('/api/v1/users').send({
@@ -28,5 +28,3 @@ async function createAuthAndDeleteUser(api, email, password) {
     throw err;
   }
 }
-
-module.exports = { createAuthAndDeleteUser };

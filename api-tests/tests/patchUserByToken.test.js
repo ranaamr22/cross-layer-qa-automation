@@ -1,5 +1,5 @@
-const request = require('supertest');
-const { faker } = require('@faker-js/faker');
+import { request } from 'supertest';
+import { faker } from '@faker-js/faker';
 
 const PORT = process.env.MOCK_AUTH_PORT || '8080';
 const BASE = `http://localhost:${PORT}`;
@@ -7,11 +7,13 @@ const api = request(BASE);
 const patchUserByToken_endpoint = '/api/v1/users'
 
 let token;
-let email = faker.internet.email();
-let password = 'user123';
+let email;
+let password;
 
 beforeEach(async () => {
     try {
+        const email = faker.internet.email();
+        const password = 'user123';
         const createRes = await api.post('/api/v1/users').send({
             name: 'Test User',
             email,
@@ -201,19 +203,4 @@ describe('PATCH USER BY TOKEN', () => {
 
     });
 });
-afterEach(
-  async () => {
-  try {
-    const res = await api
-      .delete('/api/v1/users')
-      .set('Authorization', token);
-
-    expect(res.status).toBe(200);
-  } catch (err) {
-    console.error('Error in afterEach (deleting user):', err);
-  }
-}
-
-)
-
 
