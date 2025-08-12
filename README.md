@@ -122,8 +122,6 @@ project-root/
 
 ## Running Tests
 
-### Run Individual Test Suites
-
 To run AWS tests:
 ```bash
 npm run test:amazonaws
