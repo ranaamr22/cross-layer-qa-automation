@@ -1,4 +1,4 @@
-# cross-layer-qa-automation [![CircleCI](https://dl.circleci.com/status-badge/img/gh/ranaamr22/cross-layer-qa-automation/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/ranaamr22/cross-layer-qa-automation/tree/main)
+# Cross Layer QA Automation [![CircleCI](https://dl.circleci.com/status-badge/img/gh/ranaamr22/cross-layer-qa-automation/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/ranaamr22/cross-layer-qa-automation/tree/main)
 
 
 A complete end-to-end test automation framework integrating **UI and API testing** using:
